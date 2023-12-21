@@ -5,6 +5,8 @@ RUN apt-get update && apt-get -y install build-essential libcurl4-openssl-dev li
 RUN git clone https://github.com/taganaka/SpeedTest && cd SpeedTest && \
     cmake -DCMAKE_BUILD_TYPE=Release . && make install
 
+RUN rm -rf SpeedTest
+
 COPY ./speedtest.sh .
 
 RUN chmod 0755 ./speedtest.sh
