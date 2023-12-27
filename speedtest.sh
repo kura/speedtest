@@ -1,2 +1,4 @@
 #!/bin/bash
-/usr/local/bin/SpeedTest --output json | jq
+THREADS="${THREADS:-32}"  # overwrite with env
+
+/speedtest-go --json -t $THREADS | jq

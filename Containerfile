@@ -1,23 +1,14 @@
-FROM alpine:latest
+FROM alpine:latest AS base
 
-RUN apk add --no-cache \
-        g++ \
-        cmake make \
-        curl curl-dev \
-        libxml2-dev \
-        openssl-dev \
-        git \
-        bash \
-        jq && \
-    git clone https://github.com/taganaka/SpeedTest && \
-    cd SpeedTest && \
-    cmake -DCMAKE_BUILD_TYPE=Release . && \
-    make install
-
-RUN rm -rf SpeedTest
+RUN apk add --no-cache curl bash jq && \
+    curl -sL $(curl -s https://api.github.com/repos/showwin/speedtest-go/releases/latest | \
+                 grep browser_download_url | \
+                 cut -d\" -f4 | \
+                 egrep 'Linux_x86_64.tar.gz') | \
+    tar zx
 
 COPY ./speedtest.sh .
 
-RUN chmod 0755 ./speedtest.sh
+RUN chmod 0755 ./speedtest.sh ./speedtest-go
 
 CMD ["./speedtest.sh"]
