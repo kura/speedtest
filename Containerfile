@@ -12,7 +12,7 @@ COPY ./speedtest.sh .
 RUN chmod 0755 ./speedtest.sh ./speedtest-go ./speedtest-ookla
 
 FROM alpine:latest
-RUN apk add --no-cache bash curl jq
+RUN apk add --no-cache bash curl jq whois
 COPY --from=base /speedtest-ookla /usr/bin/speedtest-ookla
 COPY --from=base /speedtest-go /usr/bin/speedtest-go
 COPY --from=base /speedtest.sh /speedtest.sh
