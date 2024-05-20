@@ -1,9 +1,10 @@
 FROM alpine:latest AS base
 RUN apk add --no-cache curl tar && \
-    curl -sL $(curl -s https://api.github.com/repos/showwin/speedtest-go/releases/latest | \
-                 grep browser_download_url | \
-                 cut -d\" -f4 | \
-                 egrep 'Linux_x86_64.tar.gz') | \
+    # curl -sL $(curl -s https://api.github.com/repos/showwin/speedtest-go/releases/latest | \
+    #              grep browser_download_url | \
+    #              cut -d\" -f4 | \
+    #              egrep 'Linux_x86_64.tar.gz') | \
+    curl -SL "https://github.com/showwin/speedtest-go/releases/download/v1.7.5/speedtest-go_1.7.5_Linux_x86_64.tar.gz" |\
     tar zx && \
     curl -sL https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz | \
     tar xz --transform='s/$/-ookla/g' speedtest
